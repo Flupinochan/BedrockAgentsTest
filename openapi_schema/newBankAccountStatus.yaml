@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: Retail Banking - New account opening status for the customer
+  version: 1.0.0
+  # Important - Prompt semantically matched to description
+  description: API for determining the status of new accounts opened based on AccountID and reason for pending status 
+paths:
+  # Lambda Function Name with Input Parameter
+  /customerAccountStatusLambda/{AccountID}/:
+    get:
+      summary: Get a list of all open new accounts and thier status
+      description: Get a list of all open new accounts and thier status
+      operationId: getAllOpenAccountStatus
+      # Input Parameter
+      parameters:
+      - name : AccountID
+        in: path
+        description: The account ID of the customer looking for status
+        required: true
+        schema:
+          type: integer
+      # Response Parameter from lambda
+      responses:
+        '200':
+          description: Successful response containing the account status details
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  AccountName:
+                    type: string
+                    description: The name of the customer corresponding to AccountID
+                  AccountID:
+                    type: integer
+                    description: The account id of the customer  
+                  Reason:
+                    type: string
+                    description: The reason for open status
+                  Status:
+                    type: string
+                    description: The status of the accountid provided
+        '404':
+          description: Error response without account information
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Error:
+                    type: string
+                    description: When the account cannot be found
