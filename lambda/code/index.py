@@ -70,6 +70,7 @@ def create_response(event):
         if "Item" in response:
             response_item = json.dumps(response["Item"])
             status_code = 200
+            # Add detail information from knowledge base
         else:
             response_item = json.dumps({"Error": "Account not found."})
             status_code = 404
